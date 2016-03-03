@@ -1,0 +1,21 @@
+<h2>Mavrix Agenda</h2>
+<h4>Enter your name to start:</h4>
+<form name="loginform" ng-submit="vm.login()" role="form">
+    <div class = "form-group">
+      <ui-select  id="username" name="username" multiple tagging tagging-label="false" limit="1" on-select="vm.onSelectCallback($item, $model)" ng-model="vm.selectedUser" theme="bootstrap" ng-disabled="disabled" style="width: 300px;" title="Choose a color">
+        <ui-select-match  placeholder="Select user or create a new one...">{{$select.selected}}</ui-select-match>
+        <ui-select-choices repeat="user in vm.userlist | filter:$select.search">
+          {{user}}
+        </ui-select-choices>
+    </ui-select>
+  </div>
+  </hr>
+
+  <!-- I thought it could be a good idea to provide two different views one with divs and one with a table. Nevertheless no time -->
+  <!-- <div class = "form-group">
+      <label class="radio-inline"><input type="radio" name="optradio" ng-model="vm.view" value="TABLE_VIEW">Table View</label>
+      <label class="radio-inline"><input type="radio" name="optradio" ng-model="vm.view" value="DIVS_VIEW">Divs View</label>
+      <p>{{vm.view}}</p>
+  </div> -->
+  </form>
+  <hr>

@@ -1,0 +1,72 @@
+<div ng-if="!vm.addcontactshown">
+  <button id="add-contact-btn" type="button" class="btn btn-default btn-sm"  ng-click="vm.showAddContact( )">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Contact
+  </button>
+
+  <button id="delete-agenda-btn" type="button" class="btn btn-default btn-sm" ng-click="vm.deleteAgenda()">
+    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete Agenda
+  </button>
+</div>
+
+<div ng-if="vm.addcontactshown">
+  <agenda-form></agenda-form>
+
+  <button id="save-contact-btn" type="button" class="btn btn-default btn-sm" ng-disabled="vm.formValidation()" ng-click="vm.addContact( )">
+    <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save
+  </button>
+  <button id="cancel-add-contact-btn" type="button" class="btn btn-default btn-sm" ng-click="vm.cancelAddContact()">
+    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+  </button>
+</div>
+
+
+
+<div>
+
+    <h1>{{vm.username}}'s Agenda</h1>
+
+  </br>
+
+  <div ng-if="vm.contacts.length > 0">
+     <h4>Search: <input ng-model="mysearch"></h4>
+  </div>
+  </br>
+<!-- <div ng-repeat="contact in vm.filteredContacts |orderBy: 'name'| filter:mysearch track by contact.email"> -->
+<!-- FILTER NOT WORKING ??? -->
+    <div ng-repeat="contact in vm.filteredContacts | filter:mysearch track by contact.email">
+
+      <div ng-if="!vm.checkIfEditable( contact.email )">
+        <h4><label>Name:&nbsp;</label> {{contact.lastname}}, {{contact.name}}</h4>
+        <ul>
+          <li><label>Email:&nbsp;</label>{{contact.email}}</li>
+          <li><label>Country:&nbsp;</label>{{contact.country.name}} - {{contact.country.code}}</li>
+        </ul>
+        <button type="button" id="edit-contact-btn" class="btn btn-default btn-sm"  ng-click="vm.editContact( contact.email )">
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+        </button>
+        <button type="button" id="remove-contact-btn" class="btn btn-default btn-sm" ng-click="vm.removeContact( contact.email )">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+        </button>
+      </div>
+
+      <div ng-if="vm.checkIfEditable( contact.email )">
+        <agenda-form></agenda-form>
+
+        <button type="button" id="edit-save-contact-btn" class="btn btn-default btn-sm" ng-disabled="vm.formValidation()" ng-click="vm.editSave( contact.email )">
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Save
+        </button>
+        <button type="button" id="edit-cancel-contact-btn" class="btn btn-default btn-sm" ng-click="vm.editCancel( contact.email )">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+        </button>
+      </div>
+    </div>
+
+  <uib-pagination
+      boundary-links="true"
+      total-items="vm.contacts.length"
+      ng-change="vm.pageChanged()"
+
+      ng-model="vm.pagination.currentPage"
+      class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+
+</div>

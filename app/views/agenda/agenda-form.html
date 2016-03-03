@@ -1,0 +1,65 @@
+<form name="userForm">
+
+    <div ng-if="vm.onError">
+        <div class="form-group">
+            <div class="alert alert-danger" role="alert" >{{vm.errorMessage}}</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="sr-only" for="name">Name</label>
+        <input
+            class="form-control"
+            type="text"
+            name="name"
+            placeholder="Name"
+            ng-model="vm.contact.name"
+            required>
+
+        <div ng-messages="userForm.name.$error">
+            <div ng-messages-include="components/form-validation/text-input-messages.html"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="sr-only" for="lastname">Last Name</label>
+        <input
+            class="form-control"
+            type="text"
+            name="lastname"
+            placeholder="Last Name"
+            ng-model="vm.contact.lastname"
+            required>
+
+        <div ng-messages="userForm.lastname.$error">
+            <div ng-messages-include="components/form-validation/text-input-messages.html"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="sr-only" for="email">Email</label>
+        <input
+            class="form-control"
+            type="email"
+            name="email"
+            placeholder="Email"
+            ng-model="vm.contact.email"
+            required>
+
+        <div ng-messages="userForm.email.$error">
+            <div ng-messages-include="components/form-validation/email-input-messages.html"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <ui-select id="country" for="country" name="country" ng-model="vm.contact.country" theme="bootstrap" ng-disabled="disabled" style="width: 300px;" title="Choose a country" required>
+          <ui-select-match placeholder="Choose country..." required>{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat=" country in vm.countries | filter:$select.search">
+            {{country.name}} - {{country.code}}
+          </ui-select-choices>
+        </ui-select>
+    </div>
+
+    <div ng-if="!vm.contact.country.name" >
+        <p >This field is required.</p>
+    </div>
+
+</form>
