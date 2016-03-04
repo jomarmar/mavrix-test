@@ -28,12 +28,12 @@
   </br>
 
   <div ng-if="vm.contacts.length > 0">
-     <h4>Search: <input ng-model="mysearch"></h4>
+     <h4>Search: <input ng-model="vm.mysearch"></h4>
   </div>
   </br>
 <!-- <div ng-repeat="contact in vm.filteredContacts |orderBy: 'name'| filter:mysearch track by contact.email"> -->
 <!-- FILTER NOT WORKING ??? -->
-    <div ng-repeat="contact in vm.filteredContacts | filter:mysearch track by contact.email">
+    <div ng-repeat="contact in vm.filteredContacts | filter:vm.mysearch track by contact.email">
 
       <div ng-if="!vm.checkIfEditable( contact.email )">
         <h4><label>Name:&nbsp;</label> {{contact.lastname}}, {{contact.name}}</h4>
@@ -61,12 +61,12 @@
       </div>
     </div>
 
-  <uib-pagination
+<!--  <uib-pagination
       boundary-links="true"
       total-items="vm.contacts.length"
       ng-change="vm.pageChanged()"
 
       ng-model="vm.pagination.currentPage"
-      class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+      class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination> -->
 
 </div>

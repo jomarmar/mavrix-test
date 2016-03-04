@@ -67,8 +67,9 @@ That's why the login!.
 
 Pagination works fine!...
 
-Filtering contacts not working. Not sure if I have found a bug or I have messed it up with pagination stuff.
-(NOTE: filtering should happen on all contact list, not just in the contacts per page).
+~~Filtering contacts not working. Not sure if I have found a bug or I have messed it up with pagination stuff.
+(NOTE: filtering should happen on all contact list, not just in the contacts per page).~~
+Filtering now works. Forgot controller (vm).
 
 ## Improvements
 
@@ -84,4 +85,4 @@ just better to use an input with autocompletion.
 - I would've liked to provide one view to show the agenda in a table and another with divs... No
 time.
 - Improve validation
-- Fix filter on contacts.
+- ~~Fix filter on contacts.~~

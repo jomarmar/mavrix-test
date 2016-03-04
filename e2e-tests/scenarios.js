@@ -58,7 +58,7 @@ describe('mavrixAgenda', function() {
 
       element(by.id("save-contact-btn")).click();
 
-      var contactList = element.all(by.repeater('contact in vm.filteredContacts | filter:mysearch track by contact.email'));
+      var contactList = element.all(by.repeater('contact in vm.filteredContacts | filter:vm.mysearch track by contact.email'));
       expect(contactList.count()).toBe(1);
     });
 
@@ -73,17 +73,17 @@ describe('mavrixAgenda', function() {
       expect(browser.getLocationAbsUrl()).toMatch("/agenda");
 
 
-      var contactList = element.all(by.repeater('contact in vm.filteredContacts | filter:mysearch track by contact.email'));
+      var contactList = element.all(by.repeater('contact in vm.filteredContacts | filter:vm.mysearch track by contact.email'));
       expect(contactList.count()).toBe(1);
     });
 
     it('check contact is removed', function() {
-      var contactList = element.all(by.repeater('contact in vm.filteredContacts | filter:mysearch track by contact.email'));
+      var contactList = element.all(by.repeater('contact in vm.filteredContacts | filter:vm.mysearch track by contact.email'));
       expect(contactList.count()).toBe(1);
 
       element(by.id("remove-contact-btn")).click();
       browser.switchTo().alert().accept();
-      var contactList = element.all(by.repeater('contact in vm.filteredContacts | filter:mysearch track by contact.email'));
+      var contactList = element.all(by.repeater('contact in vm.filteredContacts | filter:vm.mysearch track by contact.email'));
       expect(contactList.count()).toBe(0);
 
       // Finally delete agenda.
