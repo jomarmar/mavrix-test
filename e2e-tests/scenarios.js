@@ -82,11 +82,13 @@ describe('mavrixAgenda', function() {
       expect(contactList.count()).toBe(1);
 
       element(by.id("remove-contact-btn")).click();
+      browser.switchTo().alert().accept();
       var contactList = element.all(by.repeater('contact in vm.filteredContacts | filter:mysearch track by contact.email'));
       expect(contactList.count()).toBe(0);
 
       // Finally delete agenda.
       element(by.id("delete-agenda-btn")).click();
+      browser.switchTo().alert().accept();
     });
 
   });
