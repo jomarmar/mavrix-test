@@ -70,12 +70,16 @@ Pagination works fine!...
 Filtering contacts not working. Not sure if I have found a bug or I have messed it up with pagination stuff.
 (NOTE: filtering should happen on all contact list, not just in the contacts per page).
 
+## Improvements
+
+Added on new commit: After deleting the agenda redirects to main page.
+
 
 ## TODO's
 
 - Fix 'weird' select box (clicking not working properly, you need to use arrow keys). Maybe it is
 just better to use an input with autocompletion.
-- Add confirmation dialogs when deleting, modifying a contact
+- ~~Add confirmation dialogs when deleting, modifying a contact~~
 - Improve interface :). Not very good at designing
 - I would've liked to provide one view to show the agenda in a table and another with divs... No
 time.
