@@ -32,7 +32,7 @@
       <div ng-if="vm.contacts.length > 0">
         <h4>Search: <input ng-model="vm.search.$"></h4>
       </div>
-    
+
   </div>
   </br>
 <!-- <div ng-repeat="contact in vm.filteredContacts |orderBy: 'name'| filter:mysearch track by contact.email"> -->
@@ -74,13 +74,13 @@
 
 <!--    <pagination total-items="vm.contacts.length" items-per-page="vm.numPerPage" ng-model="vm.currentPage" max-size="5" class="pagination-sm"></pagination> -->
 
-
-    <uib-pagination
-      boundary-links="true"
-      total-items="vm.filterList.length"
-
-      items-per-page="vm.pagination.numPerPage"
-      ng-model="vm.pagination.currentPage"
-      class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+    <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+      <uib-pagination
+        boundary-links="true"
+        total-items="vm.filterList.length"
+        items-per-page="vm.pagination.numPerPage"
+        ng-model="vm.pagination.currentPage"
+        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+    </div>
 
 </div>
