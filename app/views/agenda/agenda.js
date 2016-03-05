@@ -2,7 +2,7 @@
     'use strict';
 
 
-    function agendaController( $location, storageSrv, usersSrv, countrySrv) {
+    function agendaController($scope, $location, storageSrv, usersSrv, countrySrv, filterFilter) {
       var vm = this;
       vm.username = usersSrv.getCurrentUser();
       vm.contacts = [];
@@ -17,10 +17,10 @@
 
       vm.pagination = {};
       vm.pagination.currentPage = 1;
-      vm.pagination.numPerPage = 10;
-      vm.pagination.maxSize = 5;
+      vm.pagination.numPerPage = 5;
 
-      vm.editable = [];
+
+      vm.editable = "";
 
       vm.addcontactshown = false;
 
@@ -41,11 +41,6 @@
           }
 
           vm.countries = countrySrv.query();
-
-          var begin = ((vm.pagination.currentPage - 1) * vm.pagination.numPerPage);
-          var end = begin + vm.pagination.numPerPage;
-
-          vm.filteredContacts = vm.contacts.slice(begin, end);
         }
       })();
 
@@ -53,7 +48,6 @@
       vm.deleteAgenda = function() {
         storageSrv.deleteKey(vm.username);
         vm.contacts = [];
-        vm.loadContacts();
 
         $location.path("/");
       }
@@ -65,7 +59,7 @@
         vm.contact.email="";
         vm.contact.country = {};
         vm.addcontactshown = true;
-        vm.editable = [];
+        vm.editable = "";
       }
 
       // Check duplicate entries in contact list. I consider the email to be unique
@@ -98,7 +92,6 @@
         vm.contacts.push(c);
 
         storageSrv.push(vm.username, JSON.stringify(vm.contacts));
-        vm.loadContacts();
 
         vm.addcontactshown = false;
       };
@@ -111,38 +104,46 @@
 
       // Remove a contact.
       vm.removeContact = function (data) {
+
         for(var i = vm.contacts.length - 1; i >= 0; i--) {
             if(vm.contacts[i].email === data) {
               vm.contacts.splice(i, 1);
             }
         }
-        vm.loadContacts();
+        if(vm.filterList) {
+
+          for(var i = vm.filterList.length - 1; i >= 0; i--) {
+              if(vm.filterList[i].email === data) {
+                vm.filterList.splice(i, 1);
+              }
+          }
+        }
 
         storageSrv.push(vm.username, JSON.stringify(vm.contacts));
       }
 
-      // Check if it is a contact being edited.
-      vm.checkIfEditable = function (data) {
-        return ($.inArray(data, vm.editable) != -1);
-      }
 
       // Edit a contact
       vm.editContact = function (data) {
-        console.log("editContact: " + data);
-        for(var i = vm.contacts.length - 1; i >= 0; i--) {
-            if(vm.contacts[i].email === data) {
-              vm.contact.name = vm.contacts[i].name;
-              vm.contact.lastname = vm.contacts[i].lastname ;
-              vm.contact.email = vm.contacts[i].email;
-              vm.contact.country = vm.contacts[i].country;
+        for(var i = vm.filterList.length - 1; i >= 0; i--) {
+            if(vm.filterList[i].email === data) {
+              vm.contact.name = vm.filterList[i].name;
+              vm.contact.lastname = vm.filterList[i].lastname ;
+              vm.contact.email = vm.filterList[i].email;
+              vm.contact.country = vm.filterList[i].country;
             }
         }
+
         vm.addcontactshown = false;
-        vm.editable.push(data);
+        vm.editable = data;
+
+        //
+
       }
 
       // Save the modified contact.
       vm.editSave = function (data) {
+
         for(var i = vm.contacts.length - 1; i >= 0; i--) {
             if(vm.contacts[i].email === data) {
               vm.contacts[i].name = vm.contact.name;
@@ -151,38 +152,15 @@
               vm.contacts[i].country = vm.contact.country;
             }
         }
-        vm.loadContacts();
 
         storageSrv.push(vm.username, JSON.stringify(vm.contacts));
 
-        vm.editable = $.grep(vm.editable, function(value) {
-          return value != data;
-        });
+        vm.editable = "";
       }
 
       // Cancel contact edition
       vm.editCancel = function(data) {
-        vm.editable = $.grep(vm.editable, function(value) {
-          return value != data;
-        });
-      }
-
-      // Reload contact list and set pagination parameters
-      vm.loadContacts = function () {
-        var begin = ((vm.pagination.currentPage - 1) * vm.pagination.numPerPage);
-        var end = begin + vm.pagination.numPerPage;
-
-        vm.filteredContacts = vm.contacts.slice(begin, end);
-      }
-
-      // Pagination currenPage
-      vm.setPage = function (pageNo) {
-          vm.pagination.currentPage = pageNo;
-      }
-
-      // Pagination: page has changed
-      vm.pageChanged = function() {
-          vm.loadContacts()
+        vm.editable = "";
       }
 
       // Determines if contact data is valid.
@@ -197,6 +175,13 @@
           }
           return isNotValid;
       }
+
+      // watch for changes on search
+      $scope.$watch('vm.search.$', function (term) {
+        // Filter by any field
+        vm.filterList = filterFilter(vm.contacts, term);
+        vm.pagination.currentPage = 1;
+      });
 
     }
 
@@ -227,12 +212,22 @@
       };
     }
 
+    var Start = function() {
+      return function (input, start) {
+        if (!input || !input.length) { return; }
+
+        start = +start;
+        return input.slice(start);
+      };
+    }
+
 
 
     var app = angular.module('mavrixAgenda');
     app.controller('agendaCtrl', agendaController);
     app.directive('agendaForm', AgendaForm);
     app.directive('confirmClick', ConfirmClick);
+    app.filter('start', Start);
 
 
 

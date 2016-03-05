@@ -28,14 +28,16 @@
   </br>
 
   <div ng-if="vm.contacts.length > 0">
-     <h4>Search: <input ng-model="vm.mysearch"></h4>
+     <h4>Search: <input ng-model="vm.search.$"></h4>
   </div>
   </br>
 <!-- <div ng-repeat="contact in vm.filteredContacts |orderBy: 'name'| filter:mysearch track by contact.email"> -->
 <!-- FILTER NOT WORKING ??? -->
-    <div ng-repeat="contact in vm.filteredContacts | filter:vm.mysearch track by contact.email">
+    <!--<div ng-repeat="contact in vm.filteredContacts | filter:vm.mysearch track by contact.email"> -->
+    <div ng-repeat="contact in vm.filterList | orderBy:contact.lastname | start: (vm.pagination.currentPage - 1) * vm.pagination.numPerPage | limitTo: vm.pagination.numPerPage track by contact.email">
 
-      <div ng-if="!vm.checkIfEditable( contact.email )">
+      <div ng-if="(vm.editable != contact.email )">
+
         <h4><label>Name:&nbsp;</label> {{contact.lastname}}, {{contact.name}}</h4>
         <ul>
           <li><label>Email:&nbsp;</label>{{contact.email}}</li>
@@ -44,12 +46,13 @@
         <button type="button" id="edit-contact-btn" class="btn btn-default btn-sm"  ng-click="vm.editContact( contact.email )">
           <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
         </button>
-        <button type="button" id="remove-contact-btn" class="btn btn-default btn-sm" confirmed-click="vm.removeContact( contact.email )" confirm-click="Are you sure to delete this contact: {{contact.email}}?">
+        <button type="button" id="remove-contact-btn" class="btn btn-default btn-sm" confirmed-click="vm.removeContact( contact.email )" confirm-click="Are you sure to delete this contact: {{ contact.email }} ?">
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
         </button>
       </div>
 
-      <div ng-if="vm.checkIfEditable( contact.email )">
+      <div ng-if="(vm.editable === contact.email )">
+
         <agenda-form></agenda-form>
 
         <button type="button" id="edit-save-contact-btn" class="btn btn-default btn-sm" ng-disabled="vm.formValidation()" ng-click="vm.editSave( contact.email )">
@@ -61,12 +64,15 @@
       </div>
     </div>
 
-<!--  <uib-pagination
-      boundary-links="true"
-      total-items="vm.contacts.length"
-      ng-change="vm.pageChanged()"
+<!--    <pagination total-items="vm.contacts.length" items-per-page="vm.numPerPage" ng-model="vm.currentPage" max-size="5" class="pagination-sm"></pagination> -->
 
+
+    <uib-pagination
+      boundary-links="true"
+      total-items="vm.filterList.length"
+
+      items-per-page="vm.pagination.numPerPage"
       ng-model="vm.pagination.currentPage"
-      class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination> -->
+      class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
 
 </div>

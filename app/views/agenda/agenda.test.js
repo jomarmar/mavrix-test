@@ -6,13 +6,16 @@ describe('mavrixAgenda controllers', function() {
   beforeEach(module('mavrixAgenda'));
 
   describe('agendaCtrl', function(){
-    var ctrl, $location, _storageSrv, _usersSrv, _countrySrv;
+    var ctrl, scope, location, _storageSrv, _usersSrv, _countrySrv, _filterFilter;
 
-    beforeEach(inject(function($controller, storageSrv, usersSrv, countrySrv) {
+    beforeEach(inject(function($controller, $rootScope, $location, storageSrv, usersSrv, countrySrv, filterFilter) {
+       scope = $rootScope.$new();;
+       location = $location;
+       _filterFilter = filterFilter;
        _storageSrv = storageSrv;
        _usersSrv = usersSrv;
        _countrySrv = countrySrv;
-       ctrl = $controller('agendaCtrl', {storageSrv: _storageSrv, usersSrv: _usersSrv, countrySrv: _countrySrv});
+       ctrl = $controller('agendaCtrl', {$scope: scope, $location: location, storageSrv: _storageSrv, usersSrv: _usersSrv, countrySrv: _countrySrv, filterFilter: _filterFilter});
        console.log("_storageSrv");
 
        ctrl.username = "test-user";
