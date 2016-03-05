@@ -27,8 +27,12 @@
 
   </br>
 
-  <div ng-if="vm.contacts.length > 0">
-     <h4>Search: <input ng-model="vm.search.$"></h4>
+  <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+
+      <div ng-if="vm.contacts.length > 0">
+        <h4>Search: <input ng-model="vm.search.$"></h4>
+      </div>
+    
   </div>
   </br>
 <!-- <div ng-repeat="contact in vm.filteredContacts |orderBy: 'name'| filter:mysearch track by contact.email"> -->
@@ -36,31 +40,35 @@
     <!--<div ng-repeat="contact in vm.filteredContacts | filter:vm.mysearch track by contact.email"> -->
     <div ng-repeat="contact in vm.filterList | orderBy:contact.lastname | start: (vm.pagination.currentPage - 1) * vm.pagination.numPerPage | limitTo: vm.pagination.numPerPage track by contact.email">
 
-      <div ng-if="(vm.editable != contact.email )">
+      <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+        <div class="row">
+          <div ng-if="(vm.editable != contact.email )">
+            <h4><label>Name:&nbsp;</label> {{contact.lastname}}, {{contact.name}}</h4>
+            <ul>
+              <li><label>Email:&nbsp;</label>{{contact.email}}</li>
+              <li><label>Country:&nbsp;</label>{{contact.country.name}} - {{contact.country.code}}</li>
+            </ul>
+            <button type="button" id="edit-contact-btn" class="btn btn-default btn-sm"  ng-click="vm.editContact( contact.email )">
+              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+            </button>
+            <button type="button" id="remove-contact-btn" class="btn btn-default btn-sm" confirmed-click="vm.removeContact( contact.email )" confirm-click="Are you sure to delete this contact: {{ contact.email }} ?">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+            </button>
+          </div>
 
-        <h4><label>Name:&nbsp;</label> {{contact.lastname}}, {{contact.name}}</h4>
-        <ul>
-          <li><label>Email:&nbsp;</label>{{contact.email}}</li>
-          <li><label>Country:&nbsp;</label>{{contact.country.name}} - {{contact.country.code}}</li>
-        </ul>
-        <button type="button" id="edit-contact-btn" class="btn btn-default btn-sm"  ng-click="vm.editContact( contact.email )">
-          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
-        </button>
-        <button type="button" id="remove-contact-btn" class="btn btn-default btn-sm" confirmed-click="vm.removeContact( contact.email )" confirm-click="Are you sure to delete this contact: {{ contact.email }} ?">
-          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
-        </button>
-      </div>
+          <div ng-if="(vm.editable === contact.email )">
 
-      <div ng-if="(vm.editable === contact.email )">
+            <agenda-form></agenda-form>
 
-        <agenda-form></agenda-form>
+            <button type="button" id="edit-save-contact-btn" class="btn btn-default btn-sm" ng-disabled="vm.formValidation()" ng-click="vm.editSave( contact.email )">
+              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Save
+            </button>
+            <button type="button" id="edit-cancel-contact-btn" class="btn btn-default btn-sm" ng-click="vm.editCancel( contact.email )">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+            </button>
 
-        <button type="button" id="edit-save-contact-btn" class="btn btn-default btn-sm" ng-disabled="vm.formValidation()" ng-click="vm.editSave( contact.email )">
-          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Save
-        </button>
-        <button type="button" id="edit-cancel-contact-btn" class="btn btn-default btn-sm" ng-click="vm.editCancel( contact.email )">
-          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
-        </button>
+          </div>
+        </div>
       </div>
     </div>
 
