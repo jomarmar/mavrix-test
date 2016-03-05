@@ -44,6 +44,10 @@
         }
       })();
 
+      vm.changeView = function (view) {
+        $location.path(view);
+      }
+
       // Deletes the agenda. That is, deletes the username key from localstorage.
       vm.deleteAgenda = function() {
         storageSrv.deleteKey(vm.username);

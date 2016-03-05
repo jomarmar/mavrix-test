@@ -1,3 +1,6 @@
+<div class="row">
+<div class="col-xs-offset-2 col-xs-6 col-sm-offset-2 col-sm-6 col-md-offset-2 col-md-6 col-lg-offset-2 col-lg-6">
+
 <div ng-if="!vm.addcontactshown">
   <button id="add-contact-btn" type="button" class="btn btn-default btn-sm"  ng-click="vm.showAddContact( )">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Contact
@@ -7,6 +10,7 @@
     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete Agenda
   </button>
 </div>
+
 
 <div ng-if="vm.addcontactshown">
   <agenda-form></agenda-form>
@@ -19,6 +23,15 @@
   </button>
 </div>
 
+</div>
+
+<div class="col-xs-offset-2 col-xs-2 col-sm-offset-2 col-sm-2 col-md-offset-2 col-md-2 col-lg-offset-2 col-lg-2">
+  <button id="change-view-btn" type="button" class="btn btn-default btn-sm" ng-click="vm.changeView('agenda-table')">
+    <span class="glyphicon glyphicon-th" aria-hidden="true"></span> Table View
+  </button>
+</div>
+
+</div>
 
 
 <div>
