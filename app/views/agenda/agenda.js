@@ -92,6 +92,10 @@
         vm.contacts.push(c);
 
         storageSrv.push(vm.username, JSON.stringify(vm.contacts));
+        vm.contact.name ="";
+        vm.contact.lastname ="";
+        vm.contact.email="";
+        vm.contact.country = {};
 
         vm.addcontactshown = false;
       };

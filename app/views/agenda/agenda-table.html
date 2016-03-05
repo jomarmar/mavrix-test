@@ -1,23 +1,8 @@
-<div ng-if="!vm.addcontactshown">
-  <button id="add-contact-btn" type="button" class="btn btn-default btn-sm"  ng-click="vm.showAddContact( )">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Contact
-  </button>
+
 
   <button id="delete-agenda-btn" type="button" class="btn btn-default btn-sm" confirmed-click="vm.deleteAgenda()" confirm-click="Are you sure to delete all contacts in agenda?">
     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete Agenda
   </button>
-</div>
-
-<div ng-if="vm.addcontactshown">
-  <agenda-form></agenda-form>
-
-  <button id="save-contact-btn" type="button" class="btn btn-default btn-sm" ng-disabled="vm.formValidation()" ng-click="vm.addContact( )">
-    <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save
-  </button>
-  <button id="cancel-add-contact-btn" type="button" class="btn btn-default btn-sm" ng-click="vm.cancelAddContact()">
-    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
-  </button>
-</div>
 
 
 
@@ -52,6 +37,70 @@
       <th>
         &nbsp;
       </th>
+    </tr>
+
+    <tr>
+
+      <td>
+        <form name="nameForm">
+          <input
+            class="form-control"
+            type="text"
+            name="name"
+            placeholder="Name"
+            ng-model="vm.contact.name"
+            required>
+
+        </form>
+        <div ng-messages="nameForm.name.$error">
+            <div ng-messages-include="components/form-validation/text-input-messages.html"></div>
+        </div>
+      </td>
+      <td>
+        <form name="lastnameForm">
+          <input
+            class="form-control"
+            type="text"
+            name="lastname"
+            placeholder="Last Name"
+            ng-model="vm.contact.lastname"
+            required>
+        </form>
+        <div ng-messages="lastnameForm.lastname.$error">
+            <div ng-messages-include="components/form-validation/text-input-messages.html"></div>
+        </div>
+      </td>
+      <td>
+        <form name="emailForm">
+          <input
+            class="form-control"
+            type="email"
+            name="email"
+            placeholder="Email"
+            ng-model="vm.contact.email"
+            required>
+        </form>
+        <div ng-messages="emailForm.email.$error">
+            <div ng-messages-include="components/form-validation/email-input-messages.html"></div>
+        </div>
+      </td>
+      <td>
+        <ui-select id="country" for="country" name="country" ng-model="vm.contact.country" theme="bootstrap" ng-disabled="disabled" style="width: 300px;" title="Choose a country" required>
+          <ui-select-match placeholder="Choose country..." required>{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat=" country in vm.countries | filter:$select.search">
+            {{country.name}} - {{country.code}}
+          </ui-select-choices>
+        </ui-select>
+        <div ng-if="!vm.contact.country.name" >
+            <p >This field is required.</p>
+        </div>
+      </td>
+      <td>
+        <button id="save-contact-btn" type="button" class="btn btn-default btn-sm" ng-disabled="vm.formValidation()" ng-click="vm.addContact( )">
+          <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save
+        </button>
+      </td>
+
     </tr>
 
     <tr ng-repeat="contact in vm.filterList | orderBy:contact.lastname | start: (vm.pagination.currentPage - 1) * vm.pagination.numPerPage | limitTo: vm.pagination.numPerPage track by contact.email">
