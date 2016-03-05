@@ -17,6 +17,12 @@
                 templateUrl: 'views/agenda/agenda.html',
                 controllerAs: 'vm'
             })
+
+            .when('/agenda-table', {
+                controller: 'agendaCtrl',
+                templateUrl: 'views/agenda/agenda-table.html',
+                controllerAs: 'vm'
+            })
             .otherwise({ redirectTo: '/' });
     }]);
  })();

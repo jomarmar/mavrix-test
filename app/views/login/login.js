@@ -8,6 +8,7 @@
     var vm = this;
 
     vm.userlist = [];
+    vm.view = "DIVS_VIEW";
 
 
     // Fills userlist with users (prefix: _mvxag_ ) found in local storage
@@ -27,7 +28,11 @@
       }
 
       usersSrv.setCurrentUser(item);
-      $location.path("/agenda");
+      if(vm.view === "DIVS_VIEW") {
+        $location.path("/agenda");
+      } else {
+        $location.path("/agenda-table");
+      }
     };
 
   }
